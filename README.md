@@ -382,7 +382,7 @@ plt.show()
 ![](/fig/averaged_ts.png)
 
 
-
+![](/fig/endpic.png)
 
 
 
