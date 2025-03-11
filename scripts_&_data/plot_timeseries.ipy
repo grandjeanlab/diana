@@ -1,0 +1,98 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thur Feb 27 11:47:51 2025
+
+@author: wesveng
+"""
+
+import os
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import numpy as np
+
+os.chdir(r'P:\4180000.43\diana_fMRI\475194')
+#%%
+ts_roi=pd.read_csv('ts_roi.csv', header=None) 
+ts_con1=pd.read_csv('ts_control1.csv', header=None)
+ts_con2=pd.read_csv('ts_control2.csv', header=None)
+
+# Group elements into chunks of 50 as cycle length is 50
+groups_roi = [ts_roi[i:i+50] for i in range(0, len(ts_roi), 50)]
+groups_roi = [df.reset_index(drop=True) for df in groups_roi] 
+ts_roi_big = pd.concat(groups_roi, axis=1)
+ts_roi_big.iloc[0,0] = np.average(ts_roi_big.iloc[1:,0])       #1st time point of 1st cycle is relabled by average of 1st time point of all other cycles
+ts_roi_big['average'] = ts_roi_big.mean(axis=1)
+average_ts_roi=ts_roi_big['average']
+
+groups_con1 = [ts_con1[i:i+50] for i in range(0, len(ts_con1), 50)]
+groups_con1 = [df.reset_index(drop=True) for df in groups_con1] 
+ts_con1_big = pd.concat(groups_con1, axis=1)
+ts_con1_big.iloc[0,0] = np.average(ts_con1_big.iloc[1:,0])       #1st time point of 1st cycle is relabled by average of 1st time point of all other cycles
+ts_con1_big['average'] = ts_con1_big.mean(axis=1)
+average_ts_con1=ts_con1_big['average']
+
+groups_con2 = [ts_con2[i:i+50] for i in range(0, len(ts_con2), 50)]
+groups_con2 = [df.reset_index(drop=True) for df in groups_con2] 
+ts_con2_big = pd.concat(groups_con2, axis=1)
+ts_con2_big.iloc[0,0] = np.average(ts_con2_big.iloc[1:,0])       #1st time point of 1st cycle is relabled by average of 1st time point of all other cycles
+ts_con2_big['average'] = ts_con2_big.mean(axis=1)
+average_ts_con2=ts_con2_big['average']
+
+#%%
+
+#normalize values according to average value in pre-stim period.
+prestim_av_roi = np.average(average_ts_roi[0:9])
+ts_percent_roi = average_ts_roi.div(prestim_av_roi)
+ts_percent_roi = ts_percent_roi.sub(1)
+ts_percent_roi = ts_percent_roi.mul(100)
+
+prestim_av_con1 = np.average(average_ts_con1[0:9])
+ts_percent_con1 = average_ts_con1.div(prestim_av_con1)
+ts_percent_con1 = ts_percent_con1.sub(1)
+ts_percent_con1 = ts_percent_con1.mul(100)
+
+prestim_av_con2 = np.average(average_ts_con2[0:9])
+ts_percent_con2 = average_ts_con2.div(prestim_av_con2)
+ts_percent_con2 = ts_percent_con2.sub(1)
+ts_percent_con2 = ts_percent_con2.mul(100)
+#%%
+
+#make figure
+sns.set_style("whitegrid")  # Clean background
+fig, ax = plt.subplots(figsize=(8, 5), dpi=300)
+ax.set_xlim(-10, 40)
+ax.axhline(0, color="black", linewidth=1.5, linestyle=":")  
+ax.axvline(0, color="black", linewidth=1.5, linestyle=":")
+for spine in ['left', 'bottom']:
+    ax.spines[spine].set_linewidth(1)  # Adjust thickness
+    ax.spines[spine].set_color('black')  # Set color to black
+ax.grid(False)
+
+ax.tick_params(axis='x', which='both', direction='out', bottom=True, top=False)
+ax.xaxis.set_major_locator(plt.MultipleLocator(10)) 
+ax.xaxis.set_minor_locator(plt.MultipleLocator(1))
+ax.tick_params(axis='x', which='major', length=10, width=1, direction= 'in')  
+ax.tick_params(axis='x', which='minor', length=5, width=1, direction= 'in')   
+
+
+# Plot signals & stim period
+shifted_timepoints = np.arange(-10, 40)
+ax.plot(shifted_timepoints,ts_percent_roi, label="ROI Signal", color="crimson", linewidth=1.25)
+ax.plot(shifted_timepoints,ts_percent_con1, label="Control 1", color="dimgrey", linewidth=1.25)
+ax.plot(shifted_timepoints,ts_percent_con2, label="Control 2", color="darkgray", linewidth=1.25)
+ax.axvspan(0, 10, color="deepskyblue", alpha=0.25, label="Stimulation Period")
+
+
+# Labels, title, legend
+ax.set_xlabel("Time from onset stimulus",  fontsize=14)
+ax.set_ylabel("Difference signal intensity (%)",  fontsize=14)
+ax.set_title("Extracted Time Series from 475194", fontsize=16, weight="bold")
+ax.legend(fontsize=11, frameon=False)
+sns.despine(ax=ax, top=True, right=True, left=False, bottom=False)
+
+
+# Show plot
+plt.savefig("averaged_ts.png", dpi=300, bbox_inches="tight")
+plt.show()
