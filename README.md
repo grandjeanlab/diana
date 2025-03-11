@@ -259,14 +259,16 @@ cd $root_dir/create_mask
 #run glm for bold sequence
 fsl_glm -i bold2diana.nii.gz -d $root_dir/bold_glm_design/glm.mat -c $root_dir/bold_glm_design/glm.con -o 475195_glm_output --out_z=475195_z_table --demean 
 ```
+
 ![BOLD signal in 2D-line slice](/fig/z_table_results.png)
 
 ```bash
 #open FSLeyes and overlay z-table results with diana temporal mean. Treshold z-table at 2
 #draw a ROI mask over the z-table results
 #For control we drew 2 masks bilaterally in the the cortical regions of the 2D-line scan
-``` 
-![](/fig/ROI_masks.png)
+```
+
+![DIANA_ROI & Control Areas](/fig/ROI_masks.png)
 
 ```bash
 #extract timeseries with fslmeants
