@@ -92,8 +92,8 @@ brkraw bids_convert raw conv.csv -j conv.json -o converted
 #move bids to bids folder
 mkdir $root_dir/bids
 find "$root_dir/raw_data/converted/sub-wave475194/" -type d -name "anat" -exec rsync -av {} "$root_dir/bids/" \;
-find "$root_dir/raw_data/converted/sub-wave475194/" -type d -name "func" -exec rsync -av {} "$root_dir/test/" \;
-find "$root_dir/raw_data/converted/sub-wave475194/" -type d -name "2dl" -exec rsync -av {} "$root_dir/test/" \;
+find "$root_dir/raw_data/converted/sub-wave475194/" -type d -name "func" -exec rsync -av {} "$root_dir/bids/" \;
+find "$root_dir/raw_data/converted/sub-wave475194/" -type d -name "2dl" -exec rsync -av {} "$root_dir/bids/" \;
 ```
 
 2. Next run the preprocessing step from RABIES onto the functional & anatomical scan. In this step the func scan will be registered onto the anatomical scan and first preprocessing on anatomical scan will be performed (inhomogeneity correction). Also orientation will be changed from LSP --> LPI
