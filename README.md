@@ -1,5 +1,5 @@
 Welcome to our DIANA repo.
-In this read_me file we'll explain exactly how to re-create our DIANA-signal, as first introduced by Toi et al. (2022) (DOI: 10.1126/science.abh4340) using optogenetic stimulation of the mouse infralimbic cortex.
+In this readme file we'll explain exactly how to re-create our DIANA-signal, as first introduced by Toi et al. (2022) (DOI: 10.1126/science.abh4340) using optogenetic stimulation of the mouse infralimbic cortex.
 
 All data analysis performed on Linux Version: CentOS Linux 7 (Core)
 
