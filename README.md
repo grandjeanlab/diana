@@ -10,19 +10,24 @@ HARDWARE:
 
 MRI scanner: Bruker BioSpec 117/16
 
+DIANA sequence:
+
+2D-line scanning method based on the method described in 
+Hike, David, Choi, Sangcheon, Zhang, Bei, Jiang, Yuanyuan, Liu, Xiaochen, Pohmann, Rolf, Koehler, Sascha, & Yu, Xin. _Implementation of 2D Line-scanning Method_. Aperture Neuro, 4 (). . https://doi.org/10.52294/001c.92792
+
 LED source: Prizmatix Optogenetics-LED-Blue (power 100%)
 
 Fiber: Prizmatix Optogenetics fiber NA=0.63
 
 Pulser: Prizmatix Optogenetics Pulser/ PulserPlus (software: Prizmatix Pulser / PulserPlus App for Mac and Windows web application)
 
-	BOLD pulse sequence lay out
+	BOLD pulser sequence lay out
 		pre-stimulus period:	0 timepoints
 		Stimulus period:	5 timepoints
 		Post-stimulus period:	55timepoints
 		Total timepoints: 	610 (11 cycles, last cycle cut short 40 timepoints)	
 		
-	DIANA pulse sequence lay out 
+	DIANA pulser sequence lay out 
 		pre-stimulus period:	10 timepoints
 		Stimulus period:	10 timepoints
 		post-stimulus period:	30 timepoints
