@@ -288,7 +288,6 @@ import os
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 import numpy as np
 
 os.chdir(r'path/to/homefolder/scripts_&_data')
